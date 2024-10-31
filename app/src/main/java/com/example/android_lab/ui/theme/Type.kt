@@ -32,3 +32,5 @@ val Typography = Typography(
     )
     */
 )
+
+val LargeFontSize = 20.sp

@@ -24,8 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.sp
 import com.example.android_lab.ui.theme.Android_LABTheme
+import com.example.android_lab.ui.theme.LargeFontSize
 
 
 class MainActivity : ComponentActivity() {
@@ -42,44 +42,25 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainView() {
-    val largeTextSize = 20.sp
 
     val noteList = remember { mutableStateListOf(Note("Do this", Category.Task, "Yeah all of this."), Note("Do that", Category.Task, "Yeah all of that.")) }
 
     Scaffold (modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            Text("Total amount of notes: " + noteList.count(), fontSize = largeTextSize)
+            Text("Total amount of notes: " + noteList.count(), fontSize = LargeFontSize)
             LazyColumn() {
                 itemsIndexed(noteList) { index, note ->
                     NotePreview(note, index)
                 }
             }
         }
+
         Box(modifier = Modifier.padding(innerPadding).fillMaxSize(), contentAlignment = Alignment.BottomEnd) {
             Button(
                 onClick = {noteList.add(Note("New note", Category.Note, "New stuff to remember."))},
                 modifier = Modifier.padding(Dp(5F))
             ) {
-                Text("New Note", fontSize = largeTextSize)
-            }
-        }
-    }
-}
-
-@Composable
-fun NotePreview(note: Note, index: Int) {
-    //HorizontalDivider()
-    Column ( modifier = Modifier
-        .padding(Dp(2F))
-        .background(color = Color.LightGray, shape = RoundedCornerShape(10))
-        .fillMaxWidth()
-        .padding(Dp(2F))
-    ) {
-        Text(note.title, fontWeight = FontWeight.Bold)
-        Box (modifier = Modifier.fillMaxWidth()){
-            Text(note.description)
-            Button(onClick = {}, modifier = Modifier.align(Alignment.CenterEnd)) {
-                Text("" + index)
+                Text("New Note", fontSize = LargeFontSize)
             }
         }
     }
