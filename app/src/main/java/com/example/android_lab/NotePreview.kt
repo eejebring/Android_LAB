@@ -3,7 +3,6 @@ package com.example.android_lab
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,15 +15,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
-import com.example.android_lab.ui.theme.LargeFontSize
 
 
 @Composable
-fun NotePreview(note: Note, index: Int) {
+fun NotePreview(note: Note, index: Int, editingNote: MutableIntState) {
     //HorizontalDivider()
     Column ( modifier = Modifier
         .padding(Dp(2F))
@@ -35,8 +34,7 @@ fun NotePreview(note: Note, index: Int) {
         Text(note.title, fontWeight = FontWeight.Bold)
         Box (modifier = Modifier.fillMaxWidth()){
             Text(note.description)
-            Button(onClick = {}, modifier = Modifier.align(Alignment.CenterEnd)) {
-                Text("" + index)
+            Button(onClick = {editingNote.intValue = index}, modifier = Modifier.align(Alignment.CenterEnd)) {
                 Icon(Icons.Filled.Edit, contentDescription = "Edit note")
             }
         }
@@ -44,13 +42,10 @@ fun NotePreview(note: Note, index: Int) {
 }
 
 @Composable
-fun NotePreviewList(noteList: MutableList<Note>, innerPadding: PaddingValues) {
-    Column(modifier = Modifier.padding(innerPadding)) {
-        Text("Total amount of notes: " + noteList.count(), fontSize = LargeFontSize)
-        LazyColumn() {
-            itemsIndexed(noteList) { index, note ->
-                NotePreview(note, index)
-            }
+fun NotePreviewList(noteList: MutableList<Note>, editingNote: MutableIntState) {
+    LazyColumn() {
+        itemsIndexed(noteList) { index, note ->
+            NotePreview(note, index, editingNote)
         }
     }
 }
