@@ -3,8 +3,11 @@ package com.example.android_lab
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
@@ -17,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import com.example.android_lab.ui.theme.LargeFontSize
 
 
 @Composable
@@ -34,6 +38,18 @@ fun NotePreview(note: Note, index: Int) {
             Button(onClick = {}, modifier = Modifier.align(Alignment.CenterEnd)) {
                 Text("" + index)
                 Icon(Icons.Filled.Edit, contentDescription = "Edit note")
+            }
+        }
+    }
+}
+
+@Composable
+fun NotePreviewList(noteList: MutableList<Note>, innerPadding: PaddingValues) {
+    Column(modifier = Modifier.padding(innerPadding)) {
+        Text("Total amount of notes: " + noteList.count(), fontSize = LargeFontSize)
+        LazyColumn() {
+            itemsIndexed(noteList) { index, note ->
+                NotePreview(note, index)
             }
         }
     }
