@@ -18,16 +18,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 
+@Composable
+fun noteColours(category: Category): Color {
+    when (category) {
+        Category.Reminder -> return Color.Yellow
+        Category.Task -> return MaterialTheme.colorScheme.primaryContainer
+        Category.Other -> return MaterialTheme.colorScheme.tertiaryContainer
+        else -> return Color.LightGray
+    }
+}
 
 @Composable
 fun NotePreview(note: Note, index: Int, editingNote: MutableIntState) {
     //HorizontalDivider()
     Column ( modifier = Modifier
         .padding(Dp(2F))
-        .background(color = MaterialTheme.colorScheme.primaryContainer, shape = RoundedCornerShape(10))
+        .background(color = noteColours(note.category), shape = RoundedCornerShape(10))
         .fillMaxWidth()
         .padding(Dp(2F))
     ) {
