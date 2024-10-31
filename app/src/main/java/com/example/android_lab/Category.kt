@@ -2,6 +2,7 @@ package com.example.android_lab
 
 enum class Category {
     Task,
-    Note,
+    Reminder,
     Other,
+    None,
 }
