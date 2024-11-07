@@ -18,10 +18,7 @@ import com.example.android_lab.ui.theme.LargeFontSize
 @Composable
 fun EditNoteView(noteList: MutableList<Note>, editingNote: Int, navController: NavController) {
     val note = noteList[editingNote]
-
-    val newTitle = remember { mutableStateOf(note.title) }
-    val newCategory = remember { mutableStateOf(note.category) }
-    val newDescription = remember { mutableStateOf(note.description) }
+    val newNote = remember { mutableStateOf(note) }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(
@@ -42,16 +39,15 @@ fun EditNoteView(noteList: MutableList<Note>, editingNote: Int, navController: N
             Text("Delete", fontSize = LargeFontSize)
         }
 
-        NoteForm(newTitle, newCategory, newDescription)
+        NoteForm(newNote)
 
         Button(
             onClick = {
-                noteList[editingNote] =
-                    Note(newTitle.value, newCategory.value, newDescription.value)
+                noteList[editingNote] = newNote.value
                 navController.navigate("main")
             },
             modifier = Modifier.align(Alignment.BottomStart),
-            enabled = noteValidations(newTitle.value, newCategory.value, newDescription.value)
+            enabled = newNote.value.isValid()
         ) {
             Text("Save", fontSize = LargeFontSize)
         }

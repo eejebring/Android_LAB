@@ -16,9 +16,7 @@ import com.example.android_lab.ui.theme.LargeFontSize
 @Composable
 fun NewNoteView(noteList: MutableList<Note>, navController: NavController) {
 
-    val newTitle = remember { mutableStateOf("") }
-    val newCategory = remember { mutableStateOf(Category.None) }
-    val newDescription = remember { mutableStateOf("") }
+    val newNote = remember { mutableStateOf(Note("", Category.None, "")) }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(
@@ -28,15 +26,15 @@ fun NewNoteView(noteList: MutableList<Note>, navController: NavController) {
             modifier = Modifier.align(Alignment.TopCenter)
         )
 
-        NoteForm(newTitle, newCategory, newDescription)
+        NoteForm(newNote)
 
         Button(
             onClick = {
-                noteList.add(Note(newTitle.value, newCategory.value, newDescription.value))
+                noteList.add(newNote.value)
                 navController.navigate("main")
             },
             modifier = Modifier.align(Alignment.BottomStart),
-            enabled = noteValidations(newTitle.value, newCategory.value, newDescription.value)
+            enabled = newNote.value.isValid()
         ) {
             Text("Save", fontSize = LargeFontSize)
         }
