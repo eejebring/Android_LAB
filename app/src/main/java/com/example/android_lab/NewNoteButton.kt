@@ -23,6 +23,6 @@ fun NewNoteButton(noteList: MutableList<Note>, navController: NavController) {
 
 fun newNote (noteList: MutableList<Note>, navController: NavController) {
     val index = noteList.count()
-    noteList.add(Note("New note", Category.None, "New stuff to remember."))
     navController.navigate("edit/$index")
+    noteList.add(Note("New note", Category.None, "New stuff to remember."))
 }

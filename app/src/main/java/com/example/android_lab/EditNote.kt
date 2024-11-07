@@ -79,7 +79,8 @@ fun EditView(noteList: MutableList<Note>, editingNote: Int, navController: NavCo
                 )
                 navController.navigate("main")
             },
-            modifier = Modifier.align(Alignment.BottomStart)
+            modifier = Modifier.align(Alignment.BottomStart),
+            enabled = noteValidations(newTitle.value, newCategory.value, newDescription.value)
         ) {
             Text("Save", fontSize = LargeFontSize)
         }
@@ -99,4 +100,11 @@ fun EditView(noteList: MutableList<Note>, editingNote: Int, navController: NavCo
             }
         }
     }
+}
+
+fun noteValidations(newTitle: String, newCategory: Category, newDescription: String): Boolean {
+    return newTitle.isNotEmpty()
+            && newTitle.length <= 128
+            && newCategory != Category.None
+            && newDescription.length <= 1024
 }
