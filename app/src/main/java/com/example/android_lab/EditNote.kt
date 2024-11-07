@@ -11,17 +11,17 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
+import androidx.navigation.NavController
 import com.example.android_lab.ui.theme.LargeFontSize
 
 @Composable
-fun EditView(noteList: MutableList<Note>, editingNote: MutableIntState) {
-    val note = noteList[editingNote.intValue]
+fun EditView(noteList: MutableList<Note>, editingNote: Int, navController: NavController) {
+    val note = noteList[editingNote]
     val expandedDropdown = remember { mutableStateOf(false) }
 
     val newTitle = remember { mutableStateOf(note.title) }
@@ -74,10 +74,10 @@ fun EditView(noteList: MutableList<Note>, editingNote: MutableIntState) {
         Button(
             onClick = {
                 noteList.set(
-                    editingNote.intValue,
+                    editingNote,
                     Note(newTitle.value, newCategory.value, newDescription.value)
                 )
-                editingNote.intValue = -1
+                navController.navigate("main")
             },
             modifier = Modifier.align(Alignment.BottomStart)
         ) {
@@ -86,8 +86,8 @@ fun EditView(noteList: MutableList<Note>, editingNote: MutableIntState) {
 
         Button(
             onClick = {
-                noteList.removeAt(editingNote.intValue)
-                editingNote.intValue = -1
+                noteList.removeAt(editingNote)
+                navController.navigate("main")
             },
             modifier = Modifier.align(Alignment.BottomEnd)
         ) {

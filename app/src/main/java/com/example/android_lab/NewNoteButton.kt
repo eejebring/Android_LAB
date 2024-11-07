@@ -5,24 +5,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableIntState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import com.example.android_lab.ui.theme.LargeFontSize
 
 @Composable
-fun NewNoteButton(noteList: MutableList<Note>, editingNote: MutableIntState) {
+fun NewNoteButton(noteList: MutableList<Note>, navController: NavController) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomEnd) {
         Button(
-            onClick = {newNote(noteList, editingNote)}
+            onClick = {newNote(noteList, navController)}
         ) {
             Text("New Note", fontSize = LargeFontSize)
         }
     }
 }
 
-fun newNote (noteList: MutableList<Note>, editingNote: MutableIntState) {
+fun newNote (noteList: MutableList<Note>, navController: NavController) {
     val index = noteList.count()
     noteList.add(Note("New note", Category.None, "New stuff to remember."))
-    editingNote.intValue = index
+    navController.navigate("edit/$index")
 }

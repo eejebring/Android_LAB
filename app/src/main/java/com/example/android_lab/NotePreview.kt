@@ -15,12 +15,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableIntState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.navigation.NavController
 
 @Composable
 fun noteColours(category: Category): Color {
@@ -33,7 +33,7 @@ fun noteColours(category: Category): Color {
 }
 
 @Composable
-fun NotePreview(note: Note, index: Int, editingNote: MutableIntState) {
+fun NotePreview(note: Note, index: Int, navController: NavController) {
     //HorizontalDivider()
     Column ( modifier = Modifier
         .padding(Dp(2F))
@@ -44,7 +44,7 @@ fun NotePreview(note: Note, index: Int, editingNote: MutableIntState) {
         Text(note.title, fontWeight = FontWeight.Bold)
         Box (modifier = Modifier.fillMaxWidth()){
             Text(note.description)
-            Button(onClick = {editingNote.intValue = index}, modifier = Modifier.align(Alignment.CenterEnd)) {
+            Button(onClick = {navController.navigate("edit/$index")}, modifier = Modifier.align(Alignment.CenterEnd)) {
                 Icon(Icons.Filled.Edit, contentDescription = "Edit note")
             }
         }
@@ -52,10 +52,10 @@ fun NotePreview(note: Note, index: Int, editingNote: MutableIntState) {
 }
 
 @Composable
-fun NotePreviewList(noteList: MutableList<Note>, editingNote: MutableIntState) {
+fun NotePreviewList(noteList: MutableList<Note>, navController: NavController) {
     LazyColumn() {
         itemsIndexed(noteList) { index, note ->
-            NotePreview(note, index, editingNote)
+            NotePreview(note, index, navController)
         }
     }
 }
