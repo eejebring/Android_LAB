@@ -24,11 +24,11 @@ import androidx.compose.ui.unit.Dp
 
 @Composable
 fun noteColours(category: Category): Color {
-    when (category) {
-        Category.Reminder -> return Color.Yellow
-        Category.Task -> return MaterialTheme.colorScheme.primaryContainer
-        Category.Other -> return MaterialTheme.colorScheme.tertiaryContainer
-        else -> return Color.LightGray
+    return when (category) {
+        Category.Reminder -> Color.Yellow
+        Category.Task -> MaterialTheme.colorScheme.primaryContainer
+        Category.Other -> MaterialTheme.colorScheme.tertiaryContainer
+        else -> Color.LightGray
     }
 }
 
