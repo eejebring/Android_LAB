@@ -14,15 +14,11 @@ import com.example.android_lab.ui.theme.LargeFontSize
 fun NewNoteButton(noteList: MutableList<Note>, navController: NavController) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomEnd) {
         Button(
-            onClick = {newNote(noteList, navController)}
+            onClick = {
+                navController.navigate("new")
+            }
         ) {
             Text("New Note", fontSize = LargeFontSize)
         }
     }
-}
-
-fun newNote (noteList: MutableList<Note>, navController: NavController) {
-    val index = noteList.count()
-    navController.navigate("edit/$index")
-    noteList.add(Note("New note", Category.None, "New stuff to remember."))
 }

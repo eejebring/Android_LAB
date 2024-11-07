@@ -14,21 +14,25 @@ import androidx.navigation.NavController
 import com.example.android_lab.ui.theme.LargeFontSize
 
 @Composable
-fun EditNoteView(noteList: MutableList<Note>, editingNote: Int, navController: NavController) {
-    val note = noteList[editingNote]
+fun NewNoteView(noteList: MutableList<Note>, navController: NavController) {
 
-    val newTitle = remember { mutableStateOf(note.title) }
-    val newCategory = remember { mutableStateOf(note.category) }
-    val newDescription = remember { mutableStateOf(note.description) }
+    val newTitle = remember { mutableStateOf("") }
+    val newCategory = remember { mutableStateOf(Category.None) }
+    val newDescription = remember { mutableStateOf("") }
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("Editing Note", fontWeight = FontWeight.Bold, fontSize = LargeFontSize, modifier = Modifier.align(Alignment.TopCenter))
+        Text(
+            "New Note",
+            fontWeight = FontWeight.Bold,
+            fontSize = LargeFontSize,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
 
         NoteForm(newTitle, newCategory, newDescription)
 
         Button(
             onClick = {
-                noteList[editingNote] = Note(newTitle.value, newCategory.value, newDescription.value)
+                noteList.add(Note(newTitle.value, newCategory.value, newDescription.value))
                 navController.navigate("main")
             },
             modifier = Modifier.align(Alignment.BottomStart),
@@ -39,7 +43,6 @@ fun EditNoteView(noteList: MutableList<Note>, editingNote: Int, navController: N
 
         Button(
             onClick = {
-                //noteList.removeAt(editingNote)
                 navController.navigate("main")
             },
             modifier = Modifier.align(Alignment.BottomEnd)

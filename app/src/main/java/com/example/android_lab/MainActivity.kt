@@ -30,28 +30,35 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            val noteList = remember { mutableStateListOf(Note("Do this", Category.Task, "Yeah all of this."), Note("Do that", Category.Task, "Yeah all of that.")) }
+            val noteList = remember {
+                mutableStateListOf(
+                    Note("Do this", Category.Task, "Yeah all of this."),
+                    Note("Do that", Category.Task, "Yeah all of that.")
+                )
+            }
 
-            Android_LABTheme (darkTheme = false) {Scaffold (modifier = Modifier.fillMaxSize()) { innerPadding ->
-                Column(modifier = Modifier.padding(innerPadding).padding(Dp(5F))) {
+            Android_LABTheme(darkTheme = false) {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    Column(modifier = Modifier
+                        .padding(innerPadding)
+                        .padding(Dp(5F))) {
 
-                    Text("Total amount of notes: " + noteList.count(), fontSize = LargeFontSize)
+                        Text("Total amount of notes: " + noteList.count(), fontSize = LargeFontSize)
 
-                    NavHost(navController = navController, startDestination = "main") {
-                        composable("main") {
-                            MainView(noteList, navController)
-                        }
-                        composable("edit/{noteId}") {
-                            val noteId = it.arguments?.getString("noteId")?.toInt() ?: -1
-                            EditView(noteList, noteId, navController)
+                        NavHost(navController = navController, startDestination = "main") {
+                            composable("main") {
+                                MainView(noteList, navController)
+                            }
+                            composable("edit/{noteId}") {
+                                val noteId = it.arguments?.getString("noteId")?.toInt() ?: -1
+                                EditNoteView(noteList, noteId, navController)
+                            }
+                            composable("new") {
+                                NewNoteView(noteList, navController)
+                            }
                         }
                     }
-                    /*if (editingNote.intValue < 0) {
-                    } else {
-                        EditView(noteList, editingNote)
-                    }*/
                 }
-            }
             }
         }
     }
