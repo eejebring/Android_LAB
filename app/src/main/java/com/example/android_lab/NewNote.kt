@@ -31,7 +31,7 @@ fun NewNoteView(noteList: MutableList<Note>, navController: NavController) {
         Button(
             onClick = {
                 noteList.add(newNote.value)
-                navController.navigate("main")
+                navController.popBackStack()
             },
             modifier = Modifier.align(Alignment.BottomStart),
             enabled = newNote.value.isValid()
@@ -41,7 +41,7 @@ fun NewNoteView(noteList: MutableList<Note>, navController: NavController) {
 
         Button(
             onClick = {
-                navController.navigate("main")
+                navController.popBackStack()
             },
             modifier = Modifier.align(Alignment.BottomEnd)
         ) {

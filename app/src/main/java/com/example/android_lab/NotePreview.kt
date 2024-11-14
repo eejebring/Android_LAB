@@ -1,6 +1,7 @@
 package com.example.android_lab
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,17 +35,24 @@ fun noteColours(category: Category): Color {
 
 @Composable
 fun NotePreview(note: Note, index: Int, navController: NavController) {
-    //HorizontalDivider()
-    Column ( modifier = Modifier
-        .padding(Dp(2F))
-        .background(color = noteColours(note.category), shape = RoundedCornerShape(10))
-        .fillMaxWidth()
-        .padding(Dp(2F))
+    Column(
+        modifier = Modifier
+            .padding(Dp(2F))
+            .background(color = noteColours(note.category), shape = RoundedCornerShape(10))
+            .fillMaxWidth()
+            .padding(Dp(2F))
     ) {
         Text(note.title, fontWeight = FontWeight.Bold)
-        Box (modifier = Modifier.fillMaxWidth()){
-            Text(note.description)
-            Button(onClick = {navController.navigate("edit/$index")}, modifier = Modifier.align(Alignment.CenterEnd)) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = { navController.navigate("detail/$index") })
+        ) {
+            Text(note.description.take(35))
+            Button(
+                onClick = { navController.navigate("edit/$index") },
+                modifier = Modifier.align(Alignment.CenterEnd)
+            ) {
                 Icon(Icons.Filled.Edit, contentDescription = "Edit note")
             }
         }

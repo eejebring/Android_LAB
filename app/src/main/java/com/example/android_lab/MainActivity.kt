@@ -1,5 +1,6 @@
 package com.example.android_lab
 
+import DetailView
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -39,9 +40,11 @@ class MainActivity : ComponentActivity() {
 
             Android_LABTheme(darkTheme = false) {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(modifier = Modifier
-                        .padding(innerPadding)
-                        .padding(Dp(5F))) {
+                    Column(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .padding(Dp(5F))
+                    ) {
 
                         Text("Total amount of notes: " + noteList.count(), fontSize = LargeFontSize)
 
@@ -55,6 +58,10 @@ class MainActivity : ComponentActivity() {
                             }
                             composable("new") {
                                 NewNoteView(noteList, navController)
+                            }
+                            composable("detail/{noteId}") {
+                                val noteId = it.arguments?.getString("noteId")?.toInt() ?: -1
+                                DetailView(noteList[noteId], navController)
                             }
                         }
                     }
